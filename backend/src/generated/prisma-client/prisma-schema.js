@@ -3,17 +3,420 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateAlbum {
   count: Int!
+}
+
+type AggregateAlbumItem {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type Album {
+  id: ID!
+  title: String!
+  description: String
+  slug: String
+  tags: [String!]!
+  owner: User
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type AlbumConnection {
+  pageInfo: PageInfo!
+  edges: [AlbumEdge]!
+  aggregate: AggregateAlbum!
+}
+
+input AlbumCreateInput {
+  id: ID
+  title: String!
+  description: String
+  slug: String
+  tags: AlbumCreatetagsInput
+  owner: UserCreateOneInput
+}
+
+input AlbumCreatetagsInput {
+  set: [String!]
+}
+
+type AlbumEdge {
+  node: Album!
+  cursor: String!
+}
+
+type AlbumItem {
+  id: ID!
+  title: String
+  description: String
+  slug: String
+  url: String!
+  tags: [String!]!
+  owner: User
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type AlbumItemConnection {
+  pageInfo: PageInfo!
+  edges: [AlbumItemEdge]!
+  aggregate: AggregateAlbumItem!
+}
+
+input AlbumItemCreateInput {
+  id: ID
+  title: String
+  description: String
+  slug: String
+  url: String!
+  tags: AlbumItemCreatetagsInput
+  owner: UserCreateOneInput
+}
+
+input AlbumItemCreatetagsInput {
+  set: [String!]
+}
+
+type AlbumItemEdge {
+  node: AlbumItem!
+  cursor: String!
+}
+
+enum AlbumItemOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  slug_ASC
+  slug_DESC
+  url_ASC
+  url_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AlbumItemPreviousValues {
+  id: ID!
+  title: String
+  description: String
+  slug: String
+  url: String!
+  tags: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type AlbumItemSubscriptionPayload {
+  mutation: MutationType!
+  node: AlbumItem
+  updatedFields: [String!]
+  previousValues: AlbumItemPreviousValues
+}
+
+input AlbumItemSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AlbumItemWhereInput
+  AND: [AlbumItemSubscriptionWhereInput!]
+  OR: [AlbumItemSubscriptionWhereInput!]
+  NOT: [AlbumItemSubscriptionWhereInput!]
+}
+
+input AlbumItemUpdateInput {
+  title: String
+  description: String
+  slug: String
+  url: String
+  tags: AlbumItemUpdatetagsInput
+  owner: UserUpdateOneInput
+}
+
+input AlbumItemUpdateManyMutationInput {
+  title: String
+  description: String
+  slug: String
+  url: String
+  tags: AlbumItemUpdatetagsInput
+}
+
+input AlbumItemUpdatetagsInput {
+  set: [String!]
+}
+
+input AlbumItemWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  slug: String
+  slug_not: String
+  slug_in: [String!]
+  slug_not_in: [String!]
+  slug_lt: String
+  slug_lte: String
+  slug_gt: String
+  slug_gte: String
+  slug_contains: String
+  slug_not_contains: String
+  slug_starts_with: String
+  slug_not_starts_with: String
+  slug_ends_with: String
+  slug_not_ends_with: String
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  owner: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [AlbumItemWhereInput!]
+  OR: [AlbumItemWhereInput!]
+  NOT: [AlbumItemWhereInput!]
+}
+
+input AlbumItemWhereUniqueInput {
+  id: ID
+}
+
+enum AlbumOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  slug_ASC
+  slug_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AlbumPreviousValues {
+  id: ID!
+  title: String!
+  description: String
+  slug: String
+  tags: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type AlbumSubscriptionPayload {
+  mutation: MutationType!
+  node: Album
+  updatedFields: [String!]
+  previousValues: AlbumPreviousValues
+}
+
+input AlbumSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AlbumWhereInput
+  AND: [AlbumSubscriptionWhereInput!]
+  OR: [AlbumSubscriptionWhereInput!]
+  NOT: [AlbumSubscriptionWhereInput!]
+}
+
+input AlbumUpdateInput {
+  title: String
+  description: String
+  slug: String
+  tags: AlbumUpdatetagsInput
+  owner: UserUpdateOneInput
+}
+
+input AlbumUpdateManyMutationInput {
+  title: String
+  description: String
+  slug: String
+  tags: AlbumUpdatetagsInput
+}
+
+input AlbumUpdatetagsInput {
+  set: [String!]
+}
+
+input AlbumWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  slug: String
+  slug_not: String
+  slug_in: [String!]
+  slug_not_in: [String!]
+  slug_lt: String
+  slug_lte: String
+  slug_gt: String
+  slug_gte: String
+  slug_contains: String
+  slug_not_contains: String
+  slug_starts_with: String
+  slug_not_starts_with: String
+  slug_ends_with: String
+  slug_not_ends_with: String
+  owner: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [AlbumWhereInput!]
+  OR: [AlbumWhereInput!]
+  NOT: [AlbumWhereInput!]
+}
+
+input AlbumWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
+  createAlbum(data: AlbumCreateInput!): Album!
+  updateAlbum(data: AlbumUpdateInput!, where: AlbumWhereUniqueInput!): Album
+  updateManyAlbums(data: AlbumUpdateManyMutationInput!, where: AlbumWhereInput): BatchPayload!
+  upsertAlbum(where: AlbumWhereUniqueInput!, create: AlbumCreateInput!, update: AlbumUpdateInput!): Album!
+  deleteAlbum(where: AlbumWhereUniqueInput!): Album
+  deleteManyAlbums(where: AlbumWhereInput): BatchPayload!
+  createAlbumItem(data: AlbumItemCreateInput!): AlbumItem!
+  updateAlbumItem(data: AlbumItemUpdateInput!, where: AlbumItemWhereUniqueInput!): AlbumItem
+  updateManyAlbumItems(data: AlbumItemUpdateManyMutationInput!, where: AlbumItemWhereInput): BatchPayload!
+  upsertAlbumItem(where: AlbumItemWhereUniqueInput!, create: AlbumItemCreateInput!, update: AlbumItemUpdateInput!): AlbumItem!
+  deleteAlbumItem(where: AlbumItemWhereUniqueInput!): AlbumItem
+  deleteManyAlbumItems(where: AlbumItemWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -49,6 +452,12 @@ enum Permission {
 }
 
 type Query {
+  album(where: AlbumWhereUniqueInput!): Album
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album]!
+  albumsConnection(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumConnection!
+  albumItem(where: AlbumItemWhereUniqueInput!): AlbumItem
+  albumItems(where: AlbumItemWhereInput, orderBy: AlbumItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AlbumItem]!
+  albumItemsConnection(where: AlbumItemWhereInput, orderBy: AlbumItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumItemConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -56,6 +465,8 @@ type Query {
 }
 
 type Subscription {
+  album(where: AlbumSubscriptionWhereInput): AlbumSubscriptionPayload
+  albumItem(where: AlbumItemSubscriptionWhereInput): AlbumItemSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -67,6 +478,8 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
+  createdAt: DateTime!
+  updatedAt: DateTime
 }
 
 type UserConnection {
@@ -83,6 +496,11 @@ input UserCreateInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreatepermissionsInput {
@@ -107,6 +525,10 @@ enum UserOrderByInput {
   resetToken_DESC
   resetTokenExpiry_ASC
   resetTokenExpiry_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
@@ -117,6 +539,8 @@ type UserPreviousValues {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
+  createdAt: DateTime!
+  updatedAt: DateTime
 }
 
 type UserSubscriptionPayload {
@@ -137,6 +561,15 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
@@ -155,8 +588,22 @@ input UserUpdateManyMutationInput {
   permissions: UserUpdatepermissionsInput
 }
 
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -238,6 +685,22 @@ input UserWhereInput {
   resetTokenExpiry_lte: Float
   resetTokenExpiry_gt: Float
   resetTokenExpiry_gte: Float
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

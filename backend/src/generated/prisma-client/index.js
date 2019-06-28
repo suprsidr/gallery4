@@ -11,6 +11,14 @@ var models = [
   {
     name: "User",
     embedded: false
+  },
+  {
+    name: "Album",
+    embedded: false
+  },
+  {
+    name: "AlbumItem",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
