@@ -1,0 +1,15 @@
+endpoint: https://eu1.prisma.sh/gallery4/gallery4/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ./src/generated/prisma-client/
+
+# Ensures Prisma client is re-generated after a datamodel change.
+hooks:
+  post-deploy:
+    - prisma generate
+
+# Seeds initial data into the database by running a script.
+# seed:
+#   run: node ./scripts/seed.js
