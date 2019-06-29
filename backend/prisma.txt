@@ -1,8 +1,0 @@
-Your Prisma endpoint is live:
-
-  HTTP:  https://eu1.prisma.sh/gallery4/gallery4/dev
-  WS:    wss://eu1.prisma.sh/gallery4/gallery4/dev
-
-You can view & edit your data here:
-
-  Prisma Admin: https://eu1.prisma.sh/gallery4/gallery4/dev/_admin
