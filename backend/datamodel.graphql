@@ -19,25 +19,15 @@ type User {
   updatedAt: DateTime @updatedAt
 }
 
-type Album {
+type Item {
   id: ID! @id
   title: String!
-  description: String
-  slug: String
+  description: String!
+  type: String!
   tags: [String] @scalarList(strategy: RELATION)
-  owner: User
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime @updatedAt
-}
-
-type AlbumItem {
-  id: ID! @id
-  title: String
-  description: String
+  image: String!
   slug: String
-  url: String!
-  tags: [String] @scalarList(strategy: RELATION)
-  owner: User
+  owner: User!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime @updatedAt
 }

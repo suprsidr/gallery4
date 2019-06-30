@@ -16,8 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  album: (where?: AlbumWhereInput) => Promise<boolean>;
-  albumItem: (where?: AlbumItemWhereInput) => Promise<boolean>;
+  item: (where?: ItemWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -40,44 +39,25 @@ export interface Prisma {
    * Queries
    */
 
-  album: (where: AlbumWhereUniqueInput) => AlbumNullablePromise;
-  albums: (args?: {
-    where?: AlbumWhereInput;
-    orderBy?: AlbumOrderByInput;
+  item: (where: ItemWhereUniqueInput) => ItemNullablePromise;
+  items: (args?: {
+    where?: ItemWhereInput;
+    orderBy?: ItemOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Album>;
-  albumsConnection: (args?: {
-    where?: AlbumWhereInput;
-    orderBy?: AlbumOrderByInput;
+  }) => FragmentableArray<Item>;
+  itemsConnection: (args?: {
+    where?: ItemWhereInput;
+    orderBy?: ItemOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => AlbumConnectionPromise;
-  albumItem: (where: AlbumItemWhereUniqueInput) => AlbumItemNullablePromise;
-  albumItems: (args?: {
-    where?: AlbumItemWhereInput;
-    orderBy?: AlbumItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<AlbumItem>;
-  albumItemsConnection: (args?: {
-    where?: AlbumItemWhereInput;
-    orderBy?: AlbumItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => AlbumItemConnectionPromise;
+  }) => ItemConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -103,38 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
-  createAlbum: (data: AlbumCreateInput) => AlbumPromise;
-  updateAlbum: (args: {
-    data: AlbumUpdateInput;
-    where: AlbumWhereUniqueInput;
-  }) => AlbumPromise;
-  updateManyAlbums: (args: {
-    data: AlbumUpdateManyMutationInput;
-    where?: AlbumWhereInput;
+  createItem: (data: ItemCreateInput) => ItemPromise;
+  updateItem: (args: {
+    data: ItemUpdateInput;
+    where: ItemWhereUniqueInput;
+  }) => ItemPromise;
+  updateManyItems: (args: {
+    data: ItemUpdateManyMutationInput;
+    where?: ItemWhereInput;
   }) => BatchPayloadPromise;
-  upsertAlbum: (args: {
-    where: AlbumWhereUniqueInput;
-    create: AlbumCreateInput;
-    update: AlbumUpdateInput;
-  }) => AlbumPromise;
-  deleteAlbum: (where: AlbumWhereUniqueInput) => AlbumPromise;
-  deleteManyAlbums: (where?: AlbumWhereInput) => BatchPayloadPromise;
-  createAlbumItem: (data: AlbumItemCreateInput) => AlbumItemPromise;
-  updateAlbumItem: (args: {
-    data: AlbumItemUpdateInput;
-    where: AlbumItemWhereUniqueInput;
-  }) => AlbumItemPromise;
-  updateManyAlbumItems: (args: {
-    data: AlbumItemUpdateManyMutationInput;
-    where?: AlbumItemWhereInput;
-  }) => BatchPayloadPromise;
-  upsertAlbumItem: (args: {
-    where: AlbumItemWhereUniqueInput;
-    create: AlbumItemCreateInput;
-    update: AlbumItemUpdateInput;
-  }) => AlbumItemPromise;
-  deleteAlbumItem: (where: AlbumItemWhereUniqueInput) => AlbumItemPromise;
-  deleteManyAlbumItems: (where?: AlbumItemWhereInput) => BatchPayloadPromise;
+  upsertItem: (args: {
+    where: ItemWhereUniqueInput;
+    create: ItemCreateInput;
+    update: ItemUpdateInput;
+  }) => ItemPromise;
+  deleteItem: (where: ItemWhereUniqueInput) => ItemPromise;
+  deleteManyItems: (where?: ItemWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -160,12 +124,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  album: (
-    where?: AlbumSubscriptionWhereInput
-  ) => AlbumSubscriptionPayloadSubscription;
-  albumItem: (
-    where?: AlbumItemSubscriptionWhereInput
-  ) => AlbumItemSubscriptionPayloadSubscription;
+  item: (
+    where?: ItemSubscriptionWhereInput
+  ) => ItemSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -187,31 +148,19 @@ export type Permission =
   | "ITEMDELETE"
   | "PERMISSIONUPDATE";
 
-export type AlbumOrderByInput =
+export type ItemOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "title_ASC"
   | "title_DESC"
   | "description_ASC"
   | "description_DESC"
+  | "type_ASC"
+  | "type_DESC"
+  | "image_ASC"
+  | "image_DESC"
   | "slug_ASC"
   | "slug_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
-
-export type AlbumItemOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "slug_ASC"
-  | "slug_DESC"
-  | "url_ASC"
-  | "url_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -237,30 +186,11 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface AlbumCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  description?: Maybe<String>;
-  slug?: Maybe<String>;
-  tags?: Maybe<AlbumCreatetagsInput>;
-  owner?: Maybe<UserCreateOneInput>;
-}
-
-export type AlbumWhereUniqueInput = AtLeastOne<{
+export type ItemWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface AlbumItemCreateInput {
-  id?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  slug?: Maybe<String>;
-  url: String;
-  tags?: Maybe<AlbumItemCreatetagsInput>;
-  owner?: Maybe<UserCreateOneInput>;
-}
-
-export interface AlbumWhereInput {
+export interface ItemWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -303,6 +233,34 @@ export interface AlbumWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
+  type?: Maybe<String>;
+  type_not?: Maybe<String>;
+  type_in?: Maybe<String[] | String>;
+  type_not_in?: Maybe<String[] | String>;
+  type_lt?: Maybe<String>;
+  type_lte?: Maybe<String>;
+  type_gt?: Maybe<String>;
+  type_gte?: Maybe<String>;
+  type_contains?: Maybe<String>;
+  type_not_contains?: Maybe<String>;
+  type_starts_with?: Maybe<String>;
+  type_not_starts_with?: Maybe<String>;
+  type_ends_with?: Maybe<String>;
+  type_not_ends_with?: Maybe<String>;
+  image?: Maybe<String>;
+  image_not?: Maybe<String>;
+  image_in?: Maybe<String[] | String>;
+  image_not_in?: Maybe<String[] | String>;
+  image_lt?: Maybe<String>;
+  image_lte?: Maybe<String>;
+  image_gt?: Maybe<String>;
+  image_gte?: Maybe<String>;
+  image_contains?: Maybe<String>;
+  image_not_contains?: Maybe<String>;
+  image_starts_with?: Maybe<String>;
+  image_not_starts_with?: Maybe<String>;
+  image_ends_with?: Maybe<String>;
+  image_not_ends_with?: Maybe<String>;
   slug?: Maybe<String>;
   slug_not?: Maybe<String>;
   slug_in?: Maybe<String[] | String>;
@@ -334,169 +292,9 @@ export interface AlbumWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<AlbumWhereInput[] | AlbumWhereInput>;
-  OR?: Maybe<AlbumWhereInput[] | AlbumWhereInput>;
-  NOT?: Maybe<AlbumWhereInput[] | AlbumWhereInput>;
-}
-
-export interface AlbumUpdateManyMutationInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  slug?: Maybe<String>;
-  tags?: Maybe<AlbumUpdatetagsInput>;
-}
-
-export interface UserCreatepermissionsInput {
-  set?: Maybe<Permission[] | Permission>;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface AlbumSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<AlbumWhereInput>;
-  AND?: Maybe<AlbumSubscriptionWhereInput[] | AlbumSubscriptionWhereInput>;
-  OR?: Maybe<AlbumSubscriptionWhereInput[] | AlbumSubscriptionWhereInput>;
-  NOT?: Maybe<AlbumSubscriptionWhereInput[] | AlbumSubscriptionWhereInput>;
-}
-
-export interface UserUpdatepermissionsInput {
-  set?: Maybe<Permission[] | Permission>;
-}
-
-export interface UserUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetTokenExpiry?: Maybe<Float>;
-  permissions?: Maybe<UserUpdatepermissionsInput>;
-}
-
-export interface UserUpdateDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetTokenExpiry?: Maybe<Float>;
-  permissions?: Maybe<UserUpdatepermissionsInput>;
-}
-
-export interface AlbumItemUpdatetagsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface AlbumItemUpdateInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  slug?: Maybe<String>;
-  url?: Maybe<String>;
-  tags?: Maybe<AlbumItemUpdatetagsInput>;
-  owner?: Maybe<UserUpdateOneInput>;
-}
-
-export interface AlbumUpdatetagsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface AlbumItemCreatetagsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface AlbumItemSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<AlbumItemWhereInput>;
-  AND?: Maybe<
-    AlbumItemSubscriptionWhereInput[] | AlbumItemSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    AlbumItemSubscriptionWhereInput[] | AlbumItemSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    AlbumItemSubscriptionWhereInput[] | AlbumItemSubscriptionWhereInput
-  >;
-}
-
-export interface AlbumItemUpdateManyMutationInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  slug?: Maybe<String>;
-  url?: Maybe<String>;
-  tags?: Maybe<AlbumItemUpdatetagsInput>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  resetToken?: Maybe<String>;
-  resetTokenExpiry?: Maybe<Float>;
-  permissions?: Maybe<UserCreatepermissionsInput>;
-}
-
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface AlbumCreatetagsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface AlbumUpdateInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  slug?: Maybe<String>;
-  tags?: Maybe<AlbumUpdatetagsInput>;
-  owner?: Maybe<UserUpdateOneInput>;
-}
-
-export type AlbumItemWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetTokenExpiry?: Maybe<Float>;
-  permissions?: Maybe<UserUpdatepermissionsInput>;
+  AND?: Maybe<ItemWhereInput[] | ItemWhereInput>;
+  OR?: Maybe<ItemWhereInput[] | ItemWhereInput>;
+  NOT?: Maybe<ItemWhereInput[] | ItemWhereInput>;
 }
 
 export interface UserWhereInput {
@@ -599,141 +397,190 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface AlbumItemWhereInput {
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface ItemCreateInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
+  title: String;
+  description: String;
+  type: String;
+  tags?: Maybe<ItemCreatetagsInput>;
+  image: String;
   slug?: Maybe<String>;
-  slug_not?: Maybe<String>;
-  slug_in?: Maybe<String[] | String>;
-  slug_not_in?: Maybe<String[] | String>;
-  slug_lt?: Maybe<String>;
-  slug_lte?: Maybe<String>;
-  slug_gt?: Maybe<String>;
-  slug_gte?: Maybe<String>;
-  slug_contains?: Maybe<String>;
-  slug_not_contains?: Maybe<String>;
-  slug_starts_with?: Maybe<String>;
-  slug_not_starts_with?: Maybe<String>;
-  slug_ends_with?: Maybe<String>;
-  slug_not_ends_with?: Maybe<String>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  owner?: Maybe<UserWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<AlbumItemWhereInput[] | AlbumItemWhereInput>;
-  OR?: Maybe<AlbumItemWhereInput[] | AlbumItemWhereInput>;
-  NOT?: Maybe<AlbumItemWhereInput[] | AlbumItemWhereInput>;
+  owner: UserCreateOneInput;
+}
+
+export interface ItemCreatetagsInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  resetToken?: Maybe<String>;
+  resetTokenExpiry?: Maybe<Float>;
+  permissions?: Maybe<UserCreatepermissionsInput>;
+}
+
+export interface UserCreatepermissionsInput {
+  set?: Maybe<Permission[] | Permission>;
+}
+
+export interface ItemUpdateInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  type?: Maybe<String>;
+  tags?: Maybe<ItemUpdatetagsInput>;
+  image?: Maybe<String>;
+  slug?: Maybe<String>;
+  owner?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface ItemUpdatetagsInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  resetToken?: Maybe<String>;
+  resetTokenExpiry?: Maybe<Float>;
+  permissions?: Maybe<UserUpdatepermissionsInput>;
+}
+
+export interface UserUpdatepermissionsInput {
+  set?: Maybe<Permission[] | Permission>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface ItemUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  type?: Maybe<String>;
+  tags?: Maybe<ItemUpdatetagsInput>;
+  image?: Maybe<String>;
+  slug?: Maybe<String>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  resetToken?: Maybe<String>;
+  resetTokenExpiry?: Maybe<Float>;
+  permissions?: Maybe<UserUpdatepermissionsInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  resetToken?: Maybe<String>;
+  resetTokenExpiry?: Maybe<Float>;
+  permissions?: Maybe<UserUpdatepermissionsInput>;
+}
+
+export interface ItemSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ItemWhereInput>;
+  AND?: Maybe<ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput>;
+  OR?: Maybe<ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput>;
+  NOT?: Maybe<ItemSubscriptionWhereInput[] | ItemSubscriptionWhereInput>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface UserPreviousValues {
+export interface Item {
   id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-  resetToken?: String;
-  resetTokenExpiry?: Float;
-  permissions: Permission[];
+  title: String;
+  description: String;
+  type: String;
+  tags: String[];
+  image: String;
+  slug?: String;
   createdAt: DateTimeOutput;
   updatedAt?: DateTimeOutput;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
+export interface ItemPromise extends Promise<Item>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  resetToken: () => Promise<String>;
-  resetTokenExpiry: () => Promise<Float>;
-  permissions: () => Promise<Permission[]>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  type: () => Promise<String>;
+  tags: () => Promise<String[]>;
+  image: () => Promise<String>;
+  slug: () => Promise<String>;
+  owner: <T = UserPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface ItemSubscription
+  extends Promise<AsyncIterator<Item>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  resetToken: () => Promise<AsyncIterator<String>>;
-  resetTokenExpiry: () => Promise<AsyncIterator<Float>>;
-  permissions: () => Promise<AsyncIterator<Permission[]>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  type: () => Promise<AsyncIterator<String>>;
+  tags: () => Promise<AsyncIterator<String[]>>;
+  image: () => Promise<AsyncIterator<String>>;
+  slug: () => Promise<AsyncIterator<String>>;
+  owner: <T = UserSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ItemNullablePromise
+  extends Promise<Item | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  type: () => Promise<String>;
+  tags: () => Promise<String[]>;
+  image: () => Promise<String>;
+  slug: () => Promise<String>;
+  owner: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface User {
@@ -788,330 +635,25 @@ export interface UserNullablePromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface AlbumPreviousValues {
-  id: ID_Output;
-  title: String;
-  description?: String;
-  slug?: String;
-  tags: String[];
-  createdAt: DateTimeOutput;
-  updatedAt?: DateTimeOutput;
-}
-
-export interface AlbumPreviousValuesPromise
-  extends Promise<AlbumPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  slug: () => Promise<String>;
-  tags: () => Promise<String[]>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AlbumPreviousValuesSubscription
-  extends Promise<AsyncIterator<AlbumPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  slug: () => Promise<AsyncIterator<String>>;
-  tags: () => Promise<AsyncIterator<String[]>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AlbumItem {
-  id: ID_Output;
-  title?: String;
-  description?: String;
-  slug?: String;
-  url: String;
-  tags: String[];
-  createdAt: DateTimeOutput;
-  updatedAt?: DateTimeOutput;
-}
-
-export interface AlbumItemPromise extends Promise<AlbumItem>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  slug: () => Promise<String>;
-  url: () => Promise<String>;
-  tags: () => Promise<String[]>;
-  owner: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AlbumItemSubscription
-  extends Promise<AsyncIterator<AlbumItem>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  slug: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
-  tags: () => Promise<AsyncIterator<String[]>>;
-  owner: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AlbumItemNullablePromise
-  extends Promise<AlbumItem | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  slug: () => Promise<String>;
-  url: () => Promise<String>;
-  tags: () => Promise<String[]>;
-  owner: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AlbumEdge {
-  node: Album;
-  cursor: String;
-}
-
-export interface AlbumEdgePromise extends Promise<AlbumEdge>, Fragmentable {
-  node: <T = AlbumPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AlbumEdgeSubscription
-  extends Promise<AsyncIterator<AlbumEdge>>,
-    Fragmentable {
-  node: <T = AlbumSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateAlbum {
-  count: Int;
-}
-
-export interface AggregateAlbumPromise
-  extends Promise<AggregateAlbum>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAlbumSubscription
-  extends Promise<AsyncIterator<AggregateAlbum>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
+export interface ItemConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: ItemEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface ItemConnectionPromise
+  extends Promise<ItemConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<ItemEdge>>() => T;
+  aggregate: <T = AggregateItemPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface ItemConnectionSubscription
+  extends Promise<AsyncIterator<ItemConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateAlbumItem {
-  count: Int;
-}
-
-export interface AggregateAlbumItemPromise
-  extends Promise<AggregateAlbumItem>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAlbumItemSubscription
-  extends Promise<AsyncIterator<AggregateAlbumItem>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AlbumItemSubscriptionPayload {
-  mutation: MutationType;
-  node: AlbumItem;
-  updatedFields: String[];
-  previousValues: AlbumItemPreviousValues;
-}
-
-export interface AlbumItemSubscriptionPayloadPromise
-  extends Promise<AlbumItemSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = AlbumItemPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = AlbumItemPreviousValuesPromise>() => T;
-}
-
-export interface AlbumItemSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<AlbumItemSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = AlbumItemSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = AlbumItemPreviousValuesSubscription>() => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface AlbumItemConnection {
-  pageInfo: PageInfo;
-  edges: AlbumItemEdge[];
-}
-
-export interface AlbumItemConnectionPromise
-  extends Promise<AlbumItemConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AlbumItemEdge>>() => T;
-  aggregate: <T = AggregateAlbumItemPromise>() => T;
-}
-
-export interface AlbumItemConnectionSubscription
-  extends Promise<AsyncIterator<AlbumItemConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AlbumItemEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAlbumItemSubscription>() => T;
-}
-
-export interface AlbumSubscriptionPayload {
-  mutation: MutationType;
-  node: Album;
-  updatedFields: String[];
-  previousValues: AlbumPreviousValues;
-}
-
-export interface AlbumSubscriptionPayloadPromise
-  extends Promise<AlbumSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = AlbumPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = AlbumPreviousValuesPromise>() => T;
-}
-
-export interface AlbumSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<AlbumSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = AlbumSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = AlbumPreviousValuesSubscription>() => T;
-}
-
-export interface Album {
-  id: ID_Output;
-  title: String;
-  description?: String;
-  slug?: String;
-  tags: String[];
-  createdAt: DateTimeOutput;
-  updatedAt?: DateTimeOutput;
-}
-
-export interface AlbumPromise extends Promise<Album>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  slug: () => Promise<String>;
-  tags: () => Promise<String[]>;
-  owner: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AlbumSubscription
-  extends Promise<AsyncIterator<Album>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  slug: () => Promise<AsyncIterator<String>>;
-  tags: () => Promise<AsyncIterator<String[]>>;
-  owner: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AlbumNullablePromise
-  extends Promise<Album | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  slug: () => Promise<String>;
-  tags: () => Promise<String[]>;
-  owner: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface AlbumConnection {
-  pageInfo: PageInfo;
-  edges: AlbumEdge[];
-}
-
-export interface AlbumConnectionPromise
-  extends Promise<AlbumConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AlbumEdge>>() => T;
-  aggregate: <T = AggregateAlbumPromise>() => T;
-}
-
-export interface AlbumConnectionSubscription
-  extends Promise<AsyncIterator<AlbumConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AlbumEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAlbumSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ItemEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateItemSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -1137,6 +679,60 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface ItemEdge {
+  node: Item;
+  cursor: String;
+}
+
+export interface ItemEdgePromise extends Promise<ItemEdge>, Fragmentable {
+  node: <T = ItemPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ItemEdgeSubscription
+  extends Promise<AsyncIterator<ItemEdge>>,
+    Fragmentable {
+  node: <T = ItemSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateItem {
+  count: Int;
+}
+
+export interface AggregateItemPromise
+  extends Promise<AggregateItem>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateItemSubscription
+  extends Promise<AsyncIterator<AggregateItem>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
 export interface UserEdge {
   node: User;
   cursor: String;
@@ -1154,60 +750,101 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AlbumItemPreviousValues {
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface ItemSubscriptionPayload {
+  mutation: MutationType;
+  node: Item;
+  updatedFields: String[];
+  previousValues: ItemPreviousValues;
+}
+
+export interface ItemSubscriptionPayloadPromise
+  extends Promise<ItemSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ItemPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ItemPreviousValuesPromise>() => T;
+}
+
+export interface ItemSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ItemSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ItemSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ItemPreviousValuesSubscription>() => T;
+}
+
+export interface ItemPreviousValues {
   id: ID_Output;
-  title?: String;
-  description?: String;
-  slug?: String;
-  url: String;
+  title: String;
+  description: String;
+  type: String;
   tags: String[];
+  image: String;
+  slug?: String;
   createdAt: DateTimeOutput;
   updatedAt?: DateTimeOutput;
 }
 
-export interface AlbumItemPreviousValuesPromise
-  extends Promise<AlbumItemPreviousValues>,
+export interface ItemPreviousValuesPromise
+  extends Promise<ItemPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   title: () => Promise<String>;
   description: () => Promise<String>;
-  slug: () => Promise<String>;
-  url: () => Promise<String>;
+  type: () => Promise<String>;
   tags: () => Promise<String[]>;
+  image: () => Promise<String>;
+  slug: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface AlbumItemPreviousValuesSubscription
-  extends Promise<AsyncIterator<AlbumItemPreviousValues>>,
+export interface ItemPreviousValuesSubscription
+  extends Promise<AsyncIterator<ItemPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
-  slug: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
+  type: () => Promise<AsyncIterator<String>>;
   tags: () => Promise<AsyncIterator<String[]>>;
+  image: () => Promise<AsyncIterator<String>>;
+  slug: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface AlbumItemEdge {
-  node: AlbumItem;
-  cursor: String;
-}
-
-export interface AlbumItemEdgePromise
-  extends Promise<AlbumItemEdge>,
-    Fragmentable {
-  node: <T = AlbumItemPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AlbumItemEdgeSubscription
-  extends Promise<AsyncIterator<AlbumItemEdge>>,
-    Fragmentable {
-  node: <T = AlbumItemSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1235,15 +872,45 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+  resetToken?: String;
+  resetTokenExpiry?: Float;
+  permissions: Permission[];
+  createdAt: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
+}
 
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  resetToken: () => Promise<String>;
+  resetTokenExpiry: () => Promise<Float>;
+  permissions: () => Promise<Permission[]>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  resetToken: () => Promise<AsyncIterator<String>>;
+  resetTokenExpiry: () => Promise<AsyncIterator<Float>>;
+  permissions: () => Promise<AsyncIterator<Permission[]>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -1261,17 +928,27 @@ The `Float` scalar type represents signed double-precision fractional values as 
 */
 export type Float = number;
 
-export type Long = string;
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
 
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
+export type Long = string;
 
 /**
  * Model Metadata
@@ -1287,11 +964,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Album",
-    embedded: false
-  },
-  {
-    name: "AlbumItem",
+    name: "Item",
     embedded: false
   }
 ];

@@ -13,17 +13,13 @@ var models = [
     embedded: false
   },
   {
-    name: "Album",
-    embedded: false
-  },
-  {
-    name: "AlbumItem",
+    name: "Item",
     embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/gallery4/gallery4/dev`
+  endpoint: `https://us1.prisma.sh/gallery4/gallery4/dev`
 });
 exports.prisma = new exports.Prisma();
