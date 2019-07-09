@@ -1,18 +1,18 @@
-const { prisma } = require('../src/generated/prisma-client')
+const { prisma } = require('../src/generated/prisma-client');
+require('dotenv').config({ path: 'variables.env' });
 
 async function main() {
-  await prisma.createUser({
-    email: 'alice@prisma.io',
-    name: 'Alice',
-    password: '$2b$10$dqyYw5XovLjpmkYNiRDEWuwKaRAvLaG45fnXE5b3KTccKZcRPka2m', // "secret42"
-    posts: {
-      create: {
-        title: 'Join us for Prisma Day 2019 in Berlin',
-        content: 'https://www.prisma.io/day/',
-        published: true,
+  await prisma.createUser(
+    {
+      data: {
+        email: process.env.ADMIN_EMAIL,
+        name: 'Admin',
+        password: '$2b$10$dqyYw5XovLjpmkYNiRDEWuwKaRAvLaG45fnXE5b3KTccKZcRPka2m', // "secret42"
+        permissions: { set: ['ADMIN'] },
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       },
-    },
-  })
+    })
 }
 
 main()

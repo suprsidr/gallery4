@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
-const { transport, makeANiceEmail } = require('../mail');
+const { transport, emailTemplate } = require('../mail');
 const { hasPermission } = require('../utils');
 
 const Mutations = {
@@ -137,7 +137,7 @@ const Mutations = {
       from: 'wes@wesbos.com',
       to: user.email,
       subject: 'Your Password Reset Token',
-      html: makeANiceEmail(`Your Password Reset Token is here!
+      html: emailTemplate(`Your Password Reset Token is here!
       \n\n
       <a href="${process.env
         .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),

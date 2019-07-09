@@ -6,13 +6,15 @@ import AboutPage from './AboutPage';
 import Albums from './Albums';
 import Album from './Album';
 import NotFound from './NotFound';
+import SignInPage from './SignInPage';
 
 /* eslint-disable */
 const routes = {
   '/': () => <HomePage />,
   '/about': () => <AboutPage />,
   '/albums': () => <Albums />,
-  '/album/:id': ({ id }) => <Album id={id} />
+  '/album/:id': ({ id }) => <Album id={id} />,
+  '/sign-in': () => <SignInPage />
 };
 /* eslint-enable */
 
