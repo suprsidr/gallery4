@@ -7,6 +7,7 @@ import Albums from './Albums';
 import Album from './Album';
 import NotFound from './NotFound';
 import SignInPage from './SignInPage';
+import NewItem from './NewItem';
 
 /* eslint-disable */
 const routes = {
@@ -14,7 +15,8 @@ const routes = {
   '/about': () => <AboutPage />,
   '/albums': () => <Albums />,
   '/album/:id': ({ id }) => <Album id={id} />,
-  '/sign-in': () => <SignInPage />
+  '/sign-in': () => <SignInPage />,
+  '/new': () => <NewItem />
 };
 /* eslint-enable */
 

@@ -9,7 +9,14 @@ import MenuBar from './MenuBar';
 import Router from './Router';
 
 const client = new ApolloClient({
-  uri: "http://localhost:4444"
+  uri: 'http://172.21.149.180:4444',
+  request: operation => {
+    operation.setContext({
+      fetchOptions: {
+        credentials: 'include',
+      },
+    });
+  },
 });
 
 const Page = () => {

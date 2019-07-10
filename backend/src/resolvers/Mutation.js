@@ -21,8 +21,6 @@ const Mutations = {
             },
           },
           ...args,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
         },
       },
       info
@@ -70,15 +68,21 @@ const Mutations = {
     args.email = args.email.toLowerCase();
     // hash their password
     const password = await bcrypt.hash(args.password, 10);
+    // get count of users
+    const userCount = await ctx.db.query.users();
+
+    let userPermissions = ['USER'];
+    if (userCount.length === 0) {
+      userPermissions = ['ADMIN'];
+    }
+
     // create the user in the database
     const user = await ctx.db.mutation.createUser(
       {
         data: {
           ...args,
           password,
-          permissions: { set: ['USER'] },
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
+          permissions: { set: userPermissions },
         },
       },
       info
@@ -171,7 +175,6 @@ const Mutations = {
         password,
         resetToken: null,
         resetTokenExpiry: null,
-        updatedAt: Date.now(),
       },
     });
     // 6. Generate JWT
@@ -207,7 +210,6 @@ const Mutations = {
           permissions: {
             set: args.permissions,
           },
-          updatedAt: Date.now(),
         },
         where: {
           id: args.userId,
